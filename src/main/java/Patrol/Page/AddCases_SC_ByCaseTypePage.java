@@ -3,14 +3,17 @@ package Patrol.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import com.aventstack.extentreports.ExtentTest;
 
 import Patrol.Utility.Library;
 
 public class AddCases_SC_ByCaseTypePage extends BasePage {
 	
-	public AddCases_SC_ByCaseTypePage(WebDriver driver) {
-		super(driver);
+	public AddCases_SC_ByCaseTypePage(WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
 	
@@ -51,7 +54,7 @@ public class AddCases_SC_ByCaseTypePage extends BasePage {
 	}
 	
 	public void enterCaseNo(String enterValue) {
-		Library.sendKeys(driver, CASE_NO, "Entered value- "+enterValue, enterValue);
+		Library.sendKeys(driver, CASE_NO, "Entered case no - "+enterValue, enterValue);
 	}
 	
 	public void selectYear2(String enterYear) {
@@ -64,27 +67,23 @@ public class AddCases_SC_ByCaseTypePage extends BasePage {
 	
 	public void verifyAvailableCases() {
 		
-		WebElement checkBox = null;
-		try {
-			checkBox = driver.findElement(By.xpath("//*[@id=\"content\"]/div/div[5]/div/div/div/div/div[1]/div/label/span"));
-			checkBox.click();
-			System.out.println("Check box click successfully.");
-			Library.threadSleep(2000);
+	
+			WebElement checkbox = driver.findElement(By.xpath("//label//span"));
+			Actions actions = new Actions(driver);
+
+			// Scroll down using the mouse wheel
+			actions.scrollByAmount(0, 200).perform(); // 
+			//String casename1 = casename.getText();
+			Library.threadSleep(1000);
+			Library.click(driver, checkbox,"click on cases");
 			Library.click(driver, ADD_CASES_BUTTON, "Clicked ok AddCases Button successfully.");
+			Library.threadSleep(2000);
 			Library.click(driver, OK_BUTTON, "Clicked on Ok Button successfully.");
-		}catch(Exception e) {
-			String expectedText = "Currenly This searched case is not available. you can request for this case and will be add and notified once available";
-			String actualText   = driver.findElement(By.xpath("//p[@style='color:red']")).getText();
-			if (actualText.contains(expectedText)) {
-				System.out.println("Webpage text verified successfully, No case available. ");
-				Library.threadSleep(2000);
-			}else {
-				System.out.println("Webpage text not as expected.");
-			}
-			
+			System.out.println("Cases Added successfully.");
+		
 		}
 		
-	}
+	
 
 	
 //	public void clickOnAddCasesButton() {

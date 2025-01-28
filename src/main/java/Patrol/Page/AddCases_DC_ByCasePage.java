@@ -1,15 +1,20 @@
 package Patrol.Page;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import com.aventstack.extentreports.ExtentTest;
 
 import Patrol.Utility.Library;
 
 public class AddCases_DC_ByCasePage extends BasePage {
 
-	public AddCases_DC_ByCasePage(WebDriver driver) {
-		super(driver);
+	public AddCases_DC_ByCasePage(WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
 	@FindBy(xpath = "(//span[@class='position-relative'])[4]")
@@ -38,6 +43,9 @@ public class AddCases_DC_ByCasePage extends BasePage {
 	
 	@FindBy (xpath = "//label//span")
 	private WebElement CHECK_BOX;
+	
+	@FindBy (xpath = "//a[@class='h6 d-block mb-0 fw-bold me-2 text-primary']")
+	private WebElement casename;
 	
 	@FindBy (xpath = "//button[@class='btn btn-primary btn-sm ms-auto']")
 	private WebElement ADD_CASE_BUTTON;
@@ -82,7 +90,14 @@ public class AddCases_DC_ByCasePage extends BasePage {
 	}
 	
 	public void clickOnCheckBox() {
-		Library.click(driver, CHECK_BOX, "Clicked on check box successfully.");
+		WebElement checkbox = driver.findElement(By.xpath("//label//span"));
+		Actions actions = new Actions(driver);
+
+		// Scroll down using the mouse wheel
+		actions.scrollByAmount(0, 300).perform(); // 
+		//String casename1 = casename.getText();
+		Library.threadSleep(1000);
+		Library.click(driver, checkbox,"click on cases");
 	}
 	
 	public void clickOnAddCases() {

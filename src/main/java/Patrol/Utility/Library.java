@@ -45,7 +45,7 @@ public class Library {
 			System.out.println(LogMessege);
 		} catch (Exception e) {
 			element.click();
-			System.out.println("Test failed at step : " + LogMessege);
+			System.out.println("Test failed at step : " + element);
 
 		}
 	}
@@ -118,15 +118,18 @@ public class Library {
 	public static void selectDropDown(WebElement element, String EnterValue) {
 		Select select = new Select(element);
 		select.selectByVisibleText(EnterValue);
+		//select.selectByValue(EnterValue1);
 	}
 
-//	public static void selectEachValueOfDropDown(WebDriver driver , WebElement element) {
-//		
-//		driver.findElement(By.xpath(element));
-//		
-//		Select select = new Select(element);
+
+	public static void getText(WebElement element, String LogMessage) {
+
+//	try {
 //		
 //	}
+	
+	
+	}
 	
 	
 }

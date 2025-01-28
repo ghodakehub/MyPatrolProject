@@ -5,12 +5,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import com.aventstack.extentreports.ExtentTest;
+
 import Patrol.Utility.Library;
 
 public class AddCases_SelectForumPage extends BasePage {
 	
-	public AddCases_SelectForumPage(WebDriver driver){
-		super(driver);
+	public AddCases_SelectForumPage(WebDriver driver ,ExtentTest test) {
+		super(driver, test);
+	
 	}
 	
 	@FindBy (how=How.XPATH, using="//a[@class='fw-semibold fs-14 text-decoration-none d-inline-flex align-items-center']")
@@ -39,6 +42,7 @@ public class AddCases_SelectForumPage extends BasePage {
 		Library.verifyText(driver, HIGH_COURT, "High Courts");
 		Library.verifyText(driver, TRIBUNALS_COURT, "Tribunals");
 		Library.verifyText(driver, DISTRICT_COURT, "District Courts");
+		Library.threadSleep(3);
 		
 	}
 	

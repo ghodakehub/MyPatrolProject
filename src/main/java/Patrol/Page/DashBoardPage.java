@@ -9,14 +9,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import com.aventstack.extentreports.ExtentTest;
+
 import Patrol.Utility.Library;
 
-public class DashBoardPage extends BasePage {
-
-	public DashBoardPage(WebDriver driver) {
-		super(driver);
+public class DashBoardPage extends BasePage
+{
+	public DashBoardPage(WebDriver driver, ExtentTest test) {
+		super(driver, test);
 	}
-
 	@FindBy(how = How.XPATH, using = "//a[@class='fw-bold text-dark fs-14 stretched-link text-decoration-none']")
 	private WebElement COMPANY;
 

@@ -1,18 +1,19 @@
 package Patrol.Page;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import com.aventstack.extentreports.ExtentTest;
 
 import Patrol.Utility.Library;
 
 public class AddCase_HC_ByCasePage extends BasePage {
 
-	public AddCase_HC_ByCasePage(WebDriver driver) {
-		super(driver);
+	public AddCase_HC_ByCasePage(WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
 	@FindBy(xpath = "(//span[@class='position-relative'])[2]")
@@ -80,7 +81,16 @@ public class AddCase_HC_ByCasePage extends BasePage {
 	}
 
 	public void clickOnCheckBox() {
-		Library.click(driver, CHECK_BOX, "Click on check box successfully.");
+		
+		WebElement checkbox = driver.findElement(By.xpath("//label//span"));
+		Actions actions = new Actions(driver);
+
+		// Scroll down using the mouse wheel
+		actions.scrollByAmount(0, 300).perform(); // 
+		//String casename1 = casename.getText();
+		Library.threadSleep(1000);
+		Library.click(driver, checkbox,"click on cases");
+		
 	}
 	
 	public void clickOnAddCases() {

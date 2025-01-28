@@ -7,14 +7,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import com.aventstack.extentreports.ExtentTest;
+
 import Patrol.Utility.Library;
 
 
 
 public class LoginPage extends BasePage {
 	
-	public LoginPage(WebDriver driver) {
-		super(driver);
+	public LoginPage(WebDriver driver ,ExtentTest test) {
+		super(driver, test);
+		
 	}
 
 	@FindBy(how = How.XPATH, using = "//input[@id='email']")

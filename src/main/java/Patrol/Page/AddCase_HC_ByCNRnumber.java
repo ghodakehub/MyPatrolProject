@@ -1,15 +1,19 @@
 package Patrol.Page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-import Libil.Utility.Library;
+import com.aventstack.extentreports.ExtentTest;
+
+import Patrol.Utility.Library;
 
 public class AddCase_HC_ByCNRnumber extends BasePage {
 	
-	public AddCase_HC_ByCNRnumber (WebDriver driver) {
-		super(driver);
+	public AddCase_HC_ByCNRnumber (WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
 	@FindBy (xpath = "//button[@class='nav-link   fs-14 py-4 fw-bold']")
@@ -43,7 +47,16 @@ public class AddCase_HC_ByCNRnumber extends BasePage {
 	}
 	
 	public void clickOnCkeckBox() {
-		Library.click(driver, CHECK_BOX, "Click on check box successfully.");
+		
+		WebElement checkbox = driver.findElement(By.xpath("//label//span"));
+		Actions actions = new Actions(driver);
+
+		// Scroll down using the mouse wheel
+		actions.scrollByAmount(0, 300).perform(); // 
+		//String casename1 = casename.getText();
+		Library.threadSleep(1000);
+		Library.click(driver, checkbox,"click on cases");
+		
 	}
 	
 	public void clickOnAddCases() {

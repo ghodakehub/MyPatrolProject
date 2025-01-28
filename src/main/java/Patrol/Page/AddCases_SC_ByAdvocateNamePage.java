@@ -4,12 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import Libil.Utility.Library;
+import com.aventstack.extentreports.ExtentTest;
+
+import Patrol.Utility.Library;
 
 public class AddCases_SC_ByAdvocateNamePage extends BasePage {
 	
-	public AddCases_SC_ByAdvocateNamePage(WebDriver driver) {
-		super(driver);
+	public AddCases_SC_ByAdvocateNamePage(WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
 	@FindBy (xpath = "(//button[@class='nav-link   fs-14 py-4 fw-bold'])[2]")
@@ -37,7 +39,7 @@ public class AddCases_SC_ByAdvocateNamePage extends BasePage {
 	public void enterAdvocateOnRecords(String LogName) {
 		Library.sendKeys(driver, SEARCH_TAB, LogName, "Sent search key - "+LogName);
 		
-		Library.dropDown(YEAR4, "2015");
+		Library.selectDropDown(YEAR4, "2015");
 		Library.threadSleep(5000);
 
 		}

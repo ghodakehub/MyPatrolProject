@@ -4,20 +4,29 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+
+
 
 public class BaseTest extends ConfingData_provider {
 
 	public WebDriver driver;
 	
+	
 	@BeforeClass
 	
 	public void launchBrowser() {
-		driver = new ChromeDriver();
-		driver.get(URL);
+		System.setProperty("webdriver.chrome.driver", BaseTest.driverpath);
+		ChromeOptions opt= new ChromeOptions();
+		opt.addArguments("--remote-allow-origins=*");
+		
+	
+		driver = new ChromeDriver(opt);
 		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		 driver.get(BaseTest.URL);
+		 driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 	}
 	
 	@AfterClass
@@ -25,6 +34,10 @@ public class BaseTest extends ConfingData_provider {
 	public void closeBrowser() {
 		driver.quit();
 	}
+	
+	
+	
+	
 	
 	
 }

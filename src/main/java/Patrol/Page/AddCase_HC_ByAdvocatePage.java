@@ -6,14 +6,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import com.aventstack.extentreports.ExtentTest;
 
 import Patrol.Utility.Library;
 
 public class AddCase_HC_ByAdvocatePage extends BasePage{
 	
-	public AddCase_HC_ByAdvocatePage(WebDriver driver){
-		super(driver);
+	public AddCase_HC_ByAdvocatePage(WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
 	@FindBy (xpath = "(//button[@class='nav-link   fs-14 py-4 fw-bold'])[3]")
@@ -31,16 +34,17 @@ public class AddCase_HC_ByAdvocatePage extends BasePage{
 	@FindBy (xpath = "(//button[@class='btn btn-primary fs-14 '])[4]")
 	private WebElement SEARCH_FOR_CASE_BUTTON;
 	
-	@FindBy (xpath = "//label//span")
+	@FindBy (xpath = "//*[@id=\"content\"]/div/div[5]/div/div/div/div/div[1]/div/label/span")
 	private WebElement CHECK_BOX;
 	
-	@FindBy (xpath = "//button[@class='btn btn-primary btn-sm ms-auto']")
+	@FindBy (xpath = "//button[@onclick='addCase()']")
 	private WebElement ADD_CASES_BUTTON;
 	
-	@FindBy (xpath =  "//BUTTON[@CLASS='swal2-confirm swal2-styled']")
+	@FindBy (xpath =  "/html/body/div[5]/div/div[6]/button[1]")
 	private WebElement OK_BUTTON;
 	
-	
+	@FindBy (xpath = "//a[@class='h6 d-block mb-0 fw-bold me-2 text-primary']")
+	private WebElement casename;
 	
 	public void clickOnByAdvoacteName() {
 		Library.click(driver, BY_ADVOCATE_NAME, "Clicked on by advocate name successfully.");
@@ -69,14 +73,24 @@ public class AddCase_HC_ByAdvocatePage extends BasePage{
 			checkBox =driver.findElements(By.xpath("//label//span"));
 			System.out.println(checkBox.size());
 			
-			for(int i=1; i<=LogNoOfCase; i++) {
+			for(int i=1; i<=2; i++) {
 				WebElement check_Box= driver.findElement(By.xpath("(//label//span)["+i+"]"));
-				Library.click(driver, check_Box, "ClickOn case-"+check_Box.getText());
+				
+				Actions actions = new Actions(driver);
+
+				// Scroll down using the mouse wheel
+				actions.scrollByAmount(0, 100).perform(); // 
+				//String casename1 = casename.getText();
+				Library.threadSleep(1000);
+				Library.click(driver, check_Box,"click on cases");
 			}
+				
 				Library.threadSleep(2000);
-				((JavascriptExecutor)driver).executeScript("window.scrollTo(0, document.bodyscrollTop)");
+				WebElement button = driver.findElement(By.xpath("//button[@onclick='addCase()']"));
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				js.executeScript("arguments[0].click();", button);
 				Library.threadSleep(2000);
-				Library.click(driver, ADD_CASES_BUTTON, "Clicked on Add cases Button successfully.");
+			//	Library.click(driver, ADD_CASES_BUTTON, "Clicked on Add cases Button successfully.");
 
 				
 	}

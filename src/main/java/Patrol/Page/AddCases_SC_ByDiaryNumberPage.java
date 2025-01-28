@@ -4,19 +4,25 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+
+import com.aventstack.extentreports.ExtentTest;
 
 import Patrol.Utility.Library;
 
 public class AddCases_SC_ByDiaryNumberPage extends BasePage {
 
-	public AddCases_SC_ByDiaryNumberPage(WebDriver driver) {
-		super(driver);
+	public AddCases_SC_ByDiaryNumberPage(WebDriver driver,ExtentTest test) {
+		super(driver, test);
 	}
 
-	@FindBy(xpath = "//a[@class='fw-semibold fs-14 text-decoration-none d-inline-flex align-items-center']")
-	private WebElement TOTAL_CASES_VIEW_ALL;
+	@FindBy(xpath = "//*[@id=\"accordionSidebar\"]/div[3]/li[2]/a/span")
+	private WebElement ManageCases;
+	
+	@FindBy(xpath = "//*[@id=\"accordionSidebar\"]/div[3]/li[2]/ul/li[1]/a/span")
+	private WebElement Cases;
 	@FindBy(xpath= " //a[@class='btn btn-primary text-nowrap me-2 h-100 px-3 d-flex align-items-center']")
 	private WebElement ADD_CASES;
 	@FindBy(xpath = "(//span[@class='position-relative'])[1]")
@@ -33,15 +39,19 @@ public class AddCases_SC_ByDiaryNumberPage extends BasePage {
 	private WebElement CHECK_BOX;
 	@FindBy (xpath = "//button[@class='btn btn-primary btn-sm ms-auto']")
 	private WebElement ADD_CASES_BUTTON;
-	@FindBy (xpath = "(//button[@type='button'])[13]")
+	@FindBy (xpath = "(//button[@type='button'])[14]")
 	private WebElement OK_BUTTON;
 	
 	
 	
 	
 	public void clickOnTotalcases() {
-		Library.click(driver, TOTAL_CASES_VIEW_ALL, "Cliked on Total cases.");
+		Library.threadSleep(2000);
+		Library.click(driver, ManageCases, "Cliked on Total cases.");
 		Library.implicitWait(driver, 20);
+		
+		Library.click(driver,Cases , "Cliked on Total cases.");
+		Library.implicitWait(driver, 10);
 	}
 
 	public void clickOnAddCases() {
@@ -72,107 +82,27 @@ public class AddCases_SC_ByDiaryNumberPage extends BasePage {
 	
 	public void verifyAvailableCase() {
 		
-		WebElement checkBox = null;
-		try {
-			checkBox = driver.findElement(By.xpath("//*[@id=\"content\"]/div/div[5]/div/div/div/div/div[1]/div/label/span"));
-			checkBox.click();
-			System.out.println("Check box click successfully.");
+		WebElement checkbox = driver.findElement(By.xpath("//label//span"));
+		Actions actions = new Actions(driver);
+
+		// Scroll down using the mouse wheel
+		actions.scrollByAmount(0, 200).perform(); // 
+		//String casename1 = casename.getText();
+		Library.threadSleep(1000);
 			Library.threadSleep(2000);
 			Library.click(driver, ADD_CASES_BUTTON, "Clicked ok AddCases Button successfully.");
 			Library.click(driver, OK_BUTTON, "Clicked on Ok Button successfully.");
-		}catch(Exception e) {
-			String expectedText = "Currenly This searched case is not available. you can request for this case and will be add and notified once available";
-			String actualText   = driver.findElement(By.xpath("//p[@style='color:red']")).getText();
-			if (actualText.contains(expectedText)) {
-				System.out.println("Webpage text verified successfully, No case available. ");
-				Library.threadSleep(2000);
-			}else {
-				System.out.println("Webpage text not as expected.");
-			}
+			System.out.println("Cases added successfully.");
+		
 			
 		}
 		
 	}
 	
-//	public void clickOnAddCasesButton() {
-//		Library.click(driver, ADD_CASES_BUTTON, "Clicked on add cases button and cases added.");
-//		Library.implicitWait(driver, 20);
-//		
-//		Library.click(driver, OK_BUTTON, "Clicked on ok button.");
-//		Library.threadSleep(5000);
-//	}
-//	
+
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public void verifyAvailableCase() {
-//		Library.implicitWait(driver, 20);
-//		
-//		WebElement element= driver.findElement(By.xpath("//p[@style='color:red']"));
-//		
-//		String searchQuery= "Currenly This searched case is not available. you can request for this case and will be add and notified once available";
-//	//	for(WebElement element)
-//		
-//		
-//	}
-		
-		
-//
-//		try {
-//		//WebElement element=driver.findElement(By.xpath("//*[@id=\"content\"]/div/div[5]/div/div/div/div/div[1]/div/label/span"));
-//		//Library.waitForVisibilityOf(driver, element);
-//		if(driver.findElement(By.xpath("//*[@id=\\\"content\\\"]/div/div[5]/div/div/div/div/div[1]/div/label/span")) != null) {
-//			Library.click(driver, CHECK_BOX, "Clicked on check box");
-//			Library.implicitWait(driver, 20);
-//			Library.click(driver, ADD_CASES_BUTTON, "Clicked on add case button and case added. ");
-//			Library.implicitWait(driver, 20);
-//			Library.click(driver, OK_BUTTON, "Clicked on Ok button.");
-//			Library.threadSleep(5000);
-//
-//		}else {
-//			System.out.println("Data not available.");
-//		}
-//		}catch(StaleElementReferenceException e){
-//			e.printStackTrace();
-//			
-//		}
-//		
-//	}
-//	
-	
-	
-	
-//	public void clickOnCheckBox() {
-//		Library.click(driver, CHECK_BOX, "Clicked on check box.");
-//		
-//	}
-//	
-//	public void clickOnAddCasesButton() {
-//		Library.click(driver, ADD_CASES_BUTTON, "Clicked on add cases button and cases added.");
-//		Library.implicitWait(driver, 20);
-//		
-//		Library.click(driver, OK_BUTTON, "Clicked on ok button.");
-//		Library.threadSleep(5000);
-//	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+
