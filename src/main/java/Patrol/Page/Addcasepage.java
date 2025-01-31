@@ -45,6 +45,8 @@ public class Addcasepage extends BasePage {
 
 	                // Check each case link
 	                for (int i = 0; i < caseLinks.size(); i++) {
+	                	driver.findElements((
+		                        By.xpath("//table//a[contains(@href, 'case')]")));
 	                    WebElement caseLink = caseLinks.get(i);
 	                    String caseName = caseLink.getText();
 	                  //  String caseUrl = caseLink.getAttribute("href");

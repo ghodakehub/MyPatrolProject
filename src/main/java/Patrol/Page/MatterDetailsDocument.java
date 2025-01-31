@@ -82,8 +82,8 @@ public class MatterDetailsDocument extends BasePage{
 	    	
 	    	docdiscreption.sendKeys("testing document on matter details page");
 	    	
-	    	Library.threadSleep(2000);
-	    	selectdoc.sendKeys("C:\\Users\\Super\\Downloads\\Screenshot 2024-11-20 at 5.34.15 PM.png");
+	    	Library.threadSleep(1000);
+	    	selectdoc.sendKeys("C:\\Users\\Super\\Downloads\\PatrolProject\\dummy photo.PNG");
 	    	
 	    	Library.threadSleep(2000);
 	    	savebtn.click();

@@ -85,7 +85,7 @@ public class AddCases_Tribunal_ByCaseTest extends BaseTest{
 		loginPage.performAction();
 		
 		DashBoardPage dashBoardPage = new DashBoardPage(driver,test);
-		dashBoardPage.clickOncompany("Skoda");
+		dashBoardPage.clickOncompany("Legiteye");
 		
 		AddCases_SC_ByDiaryNumberPage byDiaryNumber = new AddCases_SC_ByDiaryNumberPage(driver,test);
 		byDiaryNumber.clickOnTotalcases();

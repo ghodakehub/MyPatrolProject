@@ -20,7 +20,7 @@ public class Notification_Page extends BasePage {
 		
 	}
 	
-	@FindBy (xpath = "(//a[@class='nav-link'])[11]")
+	@FindBy (xpath = "//*[@id=\"accordionSidebar\"]/div[3]/li[7]/a/span")
 	private WebElement NOTIFICATION;
 	
 	
@@ -29,7 +29,17 @@ public class Notification_Page extends BasePage {
 	
 	
 	public void clickOnNotification() {
-		Library.click(driver, NOTIFICATION, "clicked on notification element available on left side of main  page in blue window.");
+		
+		 Library.threadSleep(3000);
+		  
+		    WebElement notification  = driver.findElement(By.xpath("//*[@id=\"accordionSidebar\"]/div[3]/li[7]/a/span"));
+		   // notification.click();
+		    
+		    JavascriptExecutor js1 = (JavascriptExecutor)driver;
+	 		js1.executeScript("arguments[0].scrollIntoView(true);",notification );
+	 		notification.click();
+	 
+		     Library.threadSleep(2000);
 	}
 	
 	public void verifyNotificationBarElement() {

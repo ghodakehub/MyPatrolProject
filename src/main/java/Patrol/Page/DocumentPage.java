@@ -46,11 +46,11 @@ public class DocumentPage extends BasePage {
 	@FindBy (xpath = "//*[@id=\"addForm\"]/div[2]/div[2]/div[2]/textarea")
 	private WebElement DocumentDiscreption;
 	
-	@FindBy (xpath = "//*[@id=\"addForm\"]/div[2]/div[1]/div[3]/input")
+	@FindBy (xpath = "//input[@name='document']")
 	private WebElement Documentfile;
 
 	
-	@FindBy (xpath = "//*[@id=\"addForm\"]/div[3]/button[1]")
+	@FindBy (xpath = "//*[@id=\"addForm\"]/div[3]/button")
 	private WebElement savebtn;
 
 	public void VerifyDoc()
@@ -100,8 +100,8 @@ public class DocumentPage extends BasePage {
   	Library.threadSleep(2000);
   	
   	Library.threadSleep(2000);
-  	Documentfile.sendKeys("C:\\Users\\Super\\Downloads\\Screenshot 2024-11-20 at 5.34.15 PM.png");
-  	Library.threadSleep(2000);
+  	Documentfile.sendKeys("C:\\Users\\Super\\Downloads\\PatrolProject\\dummy photo.PNG");
+  	Library.threadSleep(3000);
 		
   	savebtn.click();
   	Library.threadSleep(2000);

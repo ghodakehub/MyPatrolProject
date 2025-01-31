@@ -1,7 +1,10 @@
 package Patrol.Page;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -13,6 +16,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
+
+import Patrol.Utility.UtilityClass;
 
 public class addActiveFrim extends BasePage {
 
@@ -26,50 +31,69 @@ public class addActiveFrim extends BasePage {
 
 
 	public void checkCompany() throws InterruptedException {
-		try {
 		
-		  // Locate all active firms
-        List<WebElement> firms = driver.findElements(By.xpath("//a[@class='fw-bold text-dark fs-14 stretched-link text-decoration-none']"));
-        int totalFirms = firms.size();
-        test.info("Total active firms found: " + totalFirms);
-        Thread.sleep(1000);            
-        for (int i = 0; i < firms.size(); i++) {
-            try {
-                // Refresh the list of companies (important when navigating back)
-            	firms = driver.findElements(By.xpath("//a[@class='fw-bold text-dark fs-14 stretched-link text-decoration-none']"));
+		 for (int page = 1; page <= 2; page++) {
+	            System.out.println("Testing firms on page: " + page);
 
-                // Click on the company link
-                WebElement company = firms.get(i);
-                String companyName = company.getText();
-                System.out.println("Opening company: " + companyName);
-                test.info("Opening comapny : " + companyName);
-                company.click();
+	            // Get all firms on the current page
+	            List<WebElement> firmElements = driver.findElements(By.xpath("//*[@id=\"companyList\"]/div[1]/div/div/a")); 
 
-                // Wait for the company page to load
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(9));
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+	            for (int i = 1; i <= firmElements.size(); i++) {
+	                try {
+	                    WebElement firm = driver.findElement(By.xpath("(//*[@id=\"companyList\"]/div[1]/div/div/a)[" + i + "]")); 
+	                    String firmName = firm.getText();
+	                    System.out.println("Clicking on firm: " + firmName);
+	                    firm.click();
+	                    Thread.sleep(2000);
 
-                // Check for "Master Dashboard" text
-                try {
-                    WebElement masterDashboard = driver.findElement(By.xpath("(//*[contains(text(),'Master Dashboard')])[1]"));
-                    if (masterDashboard.isDisplayed()) {
-                        System.out.println(companyName + ": Page loaded and home page open successfully ");
-                        test.pass("Open comapny successfully :" + companyName);
-                    }
-                } catch (NoSuchElementException e) {
-                    System.out.println(companyName + ": Error is throw when we select the company");
-                    test.fail("Please check error coming while open this company : " + companyName);
-                }
-                driver.navigate().back();
-                Thread.sleep(2000);
-            } catch (Exception e) {
-                test.fail("Exception occurred while checking firm: " + e.getMessage());
-            }
-        }
-    } catch (Exception e) {
-        test.fail("Test failed due to an unexpected error: " + e.getMessage());
-    } 
-}
+	                    // Check for errors
+	                    verifyTextOnPage(driver, "Stack trace");
+
+	                    driver.navigate().back();
+	                    Thread.sleep(2000);
+	                } catch (Exception e) {
+	                  //  String screenshotPath = UtilityClass.Capaturescreenshot(driver, "Error_Firm");
+	                   // sendErrorEmail("Error in Active Firm", "Error occurred while clicking on a firm.", screenshotPath);
+	                }
+	            }
+
+	            // Click next page button
+	            try {
+	                WebElement nextPage = driver.findElement(By.xpath("//*[@id=\"companyList\"]/div[2]/nav/ul/li[3]/a")); // Update with correct XPath
+	                if (nextPage.isDisplayed()) {
+	                    nextPage.click();
+	                    Thread.sleep(3000);
+	                }
+	            } catch (Exception e) {
+	                System.out.println("No more pages available.");
+	                break;
+	            }
+	        }
+	    }
+
+	    private static void verifyTextOnPage(WebDriver driver, String searchText) throws IOException, MessagingException {
+	        try {
+	            WebElement errorElement = driver.findElement(By.xpath("//button[contains(text(), 'Stack trace')]"));
+	            if (errorElement.isDisplayed()) {
+	                System.out.println("Error coming on above Company");
+	                String screenshotPath = UtilityClass.Capaturescreenshot(driver, "Error_Screenshot");
+	               
+	    			String testUrl = driver.getCurrentUrl();  
+	   			 Patrol.Utility.ForMultiplemailReceipent.sendEmail(
+	   	            	   driver, new String[]{"ghodake6896@gmail.com"},
+	   	            	    "Patrol- AddCompany ",
+	   	            	    "Please check issue coming while click on Comapny please check below urlLink, please find the attached screenshot for details." ,
+	   	            	 screenshotPath,testUrl
+	   	            	   
+	   	            	);
+
+	    			return;
+	                
+	            }
+	        } catch (org.openqa.selenium.NoSuchElementException e) {
+	            return;
+	        }
+	    }
     }
 	          
 

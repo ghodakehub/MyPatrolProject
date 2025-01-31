@@ -2,8 +2,9 @@ package Patrol.Test;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+
 import org.testng.ITestResult;
-import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,13 +15,8 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 import ExtentReportBasic.ExtentReportManager;
-import Patrol.Page.CauseListPage;
 import Patrol.Page.CheckDetailsOf_AddedFirm;
-import Patrol.Page.DashBoardPage;
-import Patrol.Page.Details_OfAddedFirm;
 import Patrol.Page.LoginPage;
-import Patrol.Page.causelistpage2;
-import Patrol.Page.testcasuselsit;
 import Patrol.Utility.BaseTest;
 import Patrol.Utility.UtilityClass;
 
@@ -48,20 +44,16 @@ public class CauseList2 extends BaseTest {
 	
 @Test
 	
-	public void verifyCauseList() {
+	public void verifyCauseList() throws IOException, MessagingException {
 		
 		LoginPage loginPage = new LoginPage(driver,test);
 		loginPage.setEmail(Email);
 		loginPage.setPassword(Password);
 		loginPage.performAction();
-
-		//DashBoardPage dashBoardpage = new DashBoardPage(driver,test);
-		//dashBoardpage.clickOncompany("Wipro");
-
-		CheckDetailsOf_AddedFirm causeList = new CheckDetailsOf_AddedFirm(driver,test);
-		causeList.CheckDetailsOF_Firm();
-		//causelistpage2.captureScreenshot(driver, fileName);
-	
+		
+		CheckDetailsOf_AddedFirm firm= new CheckDetailsOf_AddedFirm(driver,test);
+		firm.clickOnCauseList();
+		firm.verifyFirmsInTable();
 	}
 	
 

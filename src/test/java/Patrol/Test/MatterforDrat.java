@@ -70,7 +70,7 @@ public class MatterforDrat  extends BaseTest{
 		matterPage.clickOnNewMatterButton();
 		matterPage.selectCourt("Tribunals");
 		matterPage.selectSubCourt("DRAT");
-		matterPage.selectSearchCaseDropDown("MOHD MANSOOR ALAM vs BANK OF INDIA");
+		matterPage.selectSearchCaseDropDown("B S RAVISHANKAR vs CORPORATION BANK");
 		matterPage.clickOnYesChangeButton();
 		matterPage.clickOnNextButton();
 		matterPage.selecpeople("Vikas"); 

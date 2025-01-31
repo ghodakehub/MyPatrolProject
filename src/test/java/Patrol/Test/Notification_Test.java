@@ -2,6 +2,8 @@ package Patrol.Test;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
+
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +19,7 @@ import ExtentReportBasic.ExtentReportManager;
 import Patrol.Page.DashBoardPage;
 import Patrol.Page.LoginPage;
 import Patrol.Page.Notification_Page;
+import Patrol.Page.NotificationsTabs;
 import Patrol.Utility.BaseTest;
 import Patrol.Utility.UtilityClass;
 
@@ -44,7 +47,7 @@ public class Notification_Test extends BaseTest {
 	
 	@Test
 	
-	public void verifyNotification() {
+	public void verifyNotification() throws IOException, MessagingException {
 		
 		LoginPage loginPage = new LoginPage(driver,test);
 		loginPage.setEmail(Email);
@@ -52,12 +55,11 @@ public class Notification_Test extends BaseTest {
 		loginPage.performAction();
 
 		DashBoardPage dashBoardpage = new DashBoardPage(driver,test);
-		dashBoardpage.clickOncompany("Skodayuu");
+		dashBoardpage.clickOncompany("Legitquest");
 		
-		Notification_Page nofificationPage = new Notification_Page(driver,test);
+		NotificationsTabs nofificationPage = new NotificationsTabs(driver,test);
 		nofificationPage.clickOnNotification();
 		nofificationPage.verifyNotificationBarElement();
-		
 		
 	}
 	

@@ -1,7 +1,10 @@
 package Patrol.Page;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,6 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
 
 import Patrol.Utility.Library;
+import Patrol.Utility.UtilityClass;
 
 public class CheckDetailsOf_AddedFirm extends BasePage {
 	
@@ -29,102 +33,75 @@ public class CheckDetailsOf_AddedFirm extends BasePage {
 		public void clickOnCauseList() {
 			Library.click(driver, ViewCompany, "click on view company button");
 		}
-	
-         public void CheckDetailsOF_Firm()
-         {
+
         	 
-        	 try {
-        		    driver.get("https://patrol.legitquest.com/company");
+        	 public void verifyFirmsInTable() throws IOException, MessagingException 
+        	 {
+        		 for (int page = 1; page <= 2; page++) {
+     	            System.out.println("Testing firms on page: " + page);
 
-        		    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        		    JavascriptExecutor js = (JavascriptExecutor) driver;
+     	            // Get all firms on the current page
+     	            List<WebElement> firmElements = driver.findElements(By.xpath("//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a")); 
 
-        		    while (true) {
-        		        // Fetch the firm links on the current page
-        		        List<WebElement> firmLinks = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-        		                By.xpath("//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a")));
+     	            for (int i = 1; i <= firmElements.size(); i++) {
+     	                try {
+     	                    WebElement firm = driver.findElement(By.xpath("(//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a)[" + i + "]")); 
+     	                    String firmName = firm.getText();
+     	                    System.out.println("Clicking on firm: " + firmName);
+     	                   JavascriptExecutor js = (JavascriptExecutor) driver;
+     	                   js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", firm);
+     			            Thread.sleep(500); 
+     	                    firm.click();
+     	                    Thread.sleep(1000);
 
-        		        // Process each firm on the current page
-        		        for (int i = 0; i < firmLinks.size(); i++) {
-        		            try {
-        		                // Re-fetch the firmLinks to avoid stale elements
-        		                firmLinks = driver.findElements(By.xpath("//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a"));
-        		                WebElement firmLink = firmLinks.get(i);
-        		                String firmName = firmLink.getText();
+     	                    // Check for errors
+     	                    verifyTextOnPage(driver, "Stack trace");
 
-        		                // Scroll to the element
-        		                js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", firmLink);
-        		                Thread.sleep(500); // Allow time for scrolling
+     	                    driver.navigate().back();
+     	                    Thread.sleep(1000);
+     	                } catch (Exception e) {
+     	                  //  String screenshotPath = UtilityClass.Capaturescreenshot(driver, "Error_Firm");
+     	                   // sendErrorEmail("Error in Active Firm", "Error occurred while clicking on a firm.", screenshotPath);
+     	                }
+     	            }
 
-        		                // Click the element
-        		                firmLink.click();
+     	            // Click next page button
+     	            try {
+     	                WebElement nextPage = driver.findElement(By.xpath("//*[@id=\"tab1\"]/div[2]/div/nav/div[1]/a")); // Update with correct XPath
+     	                if (nextPage.isDisplayed()) {
+     	                    nextPage.click();
+     	                    Thread.sleep(3000);
+     	                }
+     	            } catch (Exception e) {
+     	                System.out.println("No more pages available.");
+     	                break;
+     	            }
+     	        }
+     	    }
 
-        		                // Wait for the next page to load and check the company name
-        		                try {
-        		                    WebElement companyNameElement = wait.until(ExpectedConditions.presenceOfElementLocated(
-        		                            By.xpath("//*[@id=\"content\"]/div/div[2]/div/h5"))); // Replace with the correct selector
+     	    private static void verifyTextOnPage(WebDriver driver, String searchText) throws IOException, MessagingException {
+     	        try {
+     	            WebElement errorElement = driver.findElement(By.xpath("//button[contains(text(), 'Stack trace')]"));
+     	            if (errorElement.isDisplayed()) {
+     	                System.out.println("Error coming on above Company");
+     	                String screenshotPath = UtilityClass.Capaturescreenshot(driver, "Error_Screenshot");
+     	               
+     	    			String testUrl = driver.getCurrentUrl();  
+     	   			 Patrol.Utility.ForMultiplemailReceipent.sendEmail(
+     	   	            	   driver, new String[]{"ghodake6896@gmail.com"},
+     	   	            	    "Patrol-  AddedFirm",
+     	   	            	    "Please check issue coming on detail page of addedFirm please check below urlLink, please find the attached screenshot for details." ,
+     	   	            	 screenshotPath,testUrl
+     	   	            	   
+     	   	            	);
 
-        		                    String displayedCompanyName = companyNameElement.getText();
-        		                    if (displayedCompanyName.equals(firmName)) {
-        		                        System.out.println("Company name matches for: " + firmName);
-        		                    } else {
-        		                        System.out.println("Mismatch for: " + firmName);
-        		                    }
-        		                } catch (Exception innerException) {
-        		                    System.out.println("Error while checking company name for: " + firmName);
-        		                    System.out.println("Exception: " + innerException.getMessage());
-        		                }
-
-        		                // Navigate back
-        		                driver.navigate().back();
-
-        		                // Wait for the table to reload
-        		                wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-        		                        By.xpath("//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a")));
-
-        		            } catch (Exception e) {
-        		                System.out.println("Error for firm: " + firmLinks.get(i).getText());
-        		                System.out.println("Exception: " + e.getMessage());
-
-        		                // Navigate back to the main page if an error occurs
-        		                try {
-        		                    driver.navigate().back();
-        		                    // Wait for the table to reload
-        		                    wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-        		                            By.xpath("//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a")));
-        		                } catch (Exception backNavigationException) {
-        		                    System.out.println("Failed to navigate back: " + backNavigationException.getMessage());
-        		                }
-        		            }
-        		        }
-
-        		        // Check if there is a "Next" button and click it to go to the next page
-        		        try {
-        		            WebElement nextButton = driver.findElement(By.xpath("//*[@id=\"tab1\"]/div[2]/div/nav/div[1]/a"));
-        		           String text= nextButton.getText();
-        		           System.out.println(text);
-        		            if (nextButton.isDisplayed()) {
-        		            	Thread.sleep(2000);
-        		                nextButton.click();
-        		                wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-        		                       By.xpath("//*[@id=\"tab1\"]/div[1]/table/tbody/tr/td[2]/a")));
-        		            } else {
-        		                System.out.println("No more pages available.");
-        		               break; // Exit the loop if there is no "Next" button
-        		            }
-        		        } catch (Exception e) {
-        		            System.out.println("Error in pagination: " + e.getMessage());
-        		           //break; // Exit the loop if there's an issue with finding the "Next" button
-        		        }
-        		    }
-        		} catch (Exception e) {
-        		    e.printStackTrace();
-        		} finally {
-        		    driver.quit();
-        		}
-        	 
-        	 
-        	 
+     	    			return;
+     	                
+     	            }
+     	        } catch (org.openqa.selenium.NoSuchElementException e) {
+     	            return;
+     	        }
+     	    }
         	 
          }
 	
@@ -141,4 +118,4 @@ public class CheckDetailsOf_AddedFirm extends BasePage {
 	
 	
 	
-}
+

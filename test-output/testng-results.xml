@@ -2,39 +2,24 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-01-28T16:11:37 IST" name="Default suite" finished-at="2025-01-28T16:12:29 IST" duration-ms="52595">
+  <suite started-at="2025-01-31T13:40:46 IST" name="Default suite" finished-at="2025-01-31T13:44:44 IST" duration-ms="237605">
     <groups>
     </groups>
-    <test started-at="2025-01-28T16:11:37 IST" name="Default test" finished-at="2025-01-28T16:12:29 IST" duration-ms="52595">
-      <class name="Patrol.Test.AddCases_SC_ByPartNameTest">
-        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:Patrol.Test.AddCases_SC_ByPartNameTest@22ff4249]" started-at="2025-01-28T16:11:37 IST" name="launchBrowser" finished-at="2025-01-28T16:11:41 IST" duration-ms="4210" status="PASS">
+    <test started-at="2025-01-31T13:40:46 IST" name="Default test" finished-at="2025-01-31T13:44:44 IST" duration-ms="237605">
+      <class name="Patrol.Test.DocumentsAllMatters">
+        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:Patrol.Test.DocumentsAllMatters@6a6cb05c]" started-at="2025-01-31T13:40:46 IST" name="launchBrowser" finished-at="2025-01-31T13:40:50 IST" duration-ms="4013" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- launchBrowser -->
-        <test-method is-config="true" signature="initialize()[pri:0, instance:Patrol.Test.AddCases_SC_ByPartNameTest@22ff4249]" started-at="2025-01-28T16:11:41 IST" name="initialize" finished-at="2025-01-28T16:11:42 IST" duration-ms="426" status="PASS">
+        <test-method signature="makeNewMatter()[pri:0, instance:Patrol.Test.DocumentsAllMatters@6a6cb05c]" started-at="2025-01-31T13:40:50 IST" name="makeNewMatter" finished-at="2025-01-31T13:44:44 IST" duration-ms="233259" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- initialize -->
-        <test-method signature="verifyAddCase_SC_ByPartyType()[pri:0, instance:Patrol.Test.AddCases_SC_ByPartNameTest@22ff4249]" started-at="2025-01-28T16:11:42 IST" name="verifyAddCase_SC_ByPartyType" finished-at="2025-01-28T16:12:28 IST" duration-ms="46933" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- verifyAddCase_SC_ByPartyType -->
-        <test-method is-config="true" signature="aftermethod(org.testng.ITestResult)[pri:0, instance:Patrol.Test.AddCases_SC_ByPartNameTest@22ff4249]" started-at="2025-01-28T16:12:28 IST" name="aftermethod" finished-at="2025-01-28T16:12:29 IST" duration-ms="959" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=verifyAddCase_SC_ByPartyType status=SUCCESS method=AddCases_SC_ByPartNameTest.verifyAddCase_SC_ByPartyType()[pri:0, instance:Patrol.Test.AddCases_SC_ByPartNameTest@22ff4249] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- aftermethod -->
-        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:Patrol.Test.AddCases_SC_ByPartNameTest@22ff4249]" started-at="2025-01-28T16:12:29 IST" name="closeBrowser" finished-at="2025-01-28T16:12:29 IST" duration-ms="1" status="PASS">
+        </test-method> <!-- makeNewMatter -->
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:Patrol.Test.DocumentsAllMatters@6a6cb05c]" started-at="2025-01-31T13:44:44 IST" name="closeBrowser" finished-at="2025-01-31T13:44:44 IST" duration-ms="262" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closeBrowser -->
-      </class> <!-- Patrol.Test.AddCases_SC_ByPartNameTest -->
+      </class> <!-- Patrol.Test.DocumentsAllMatters -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

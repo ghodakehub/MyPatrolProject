@@ -54,7 +54,7 @@ public class Allcasepage extends BaseTest{
 		loginpage.performAction();
 		
 		DashBoardPage dashBoardpage = new DashBoardPage(driver,test);
-		dashBoardpage.clickOncompany("Supreme Dada");
+		dashBoardpage.clickOncompany("Alembic");
 		
 		AddCases_SC_ByDiaryNumberPage byDiaryNumber = new AddCases_SC_ByDiaryNumberPage(driver,test);
 		byDiaryNumber.clickOnTotalcases();

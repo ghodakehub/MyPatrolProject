@@ -3,15 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="Patrol.Test.AddCases_SC_ByPartNameTest">
+      <class name="Patrol.Test.DocumentsAllMatters">
         <methods>
           <include name="closeBrowser"/>
-          <include name="initialize"/>
-          <include name="verifyAddCase_SC_ByPartyType"/>
           <include name="launchBrowser"/>
-          <include name="aftermethod"/>
+          <include name="makeNewMatter"/>
         </methods>
-      </class> <!-- Patrol.Test.AddCases_SC_ByPartNameTest -->
+      </class> <!-- Patrol.Test.DocumentsAllMatters -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
